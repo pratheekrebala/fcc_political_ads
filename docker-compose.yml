@@ -1,0 +1,31 @@
+version: '2'
+services:
+  adsleuth:
+    build: .
+    image: adsleuth:latest
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    links:
+      - postgres
+      - elastic
+    depends_on:
+      - postgres
+      - elastic
+  postgres:
+    image: postgres:latest
+    environment:
+      - GEOJSONURL=localhost:8080
+      - POSTGRES_DB=adsleuth
+      - POSTGRES_USER=adsleuth
+      - POSTGRES_PASSWORD=adsleuth
+      - PGDATA=/var/lib/postresql/data/adsleuth
+    volumes:
+      - './postgres_volume:/var/lib/postgresql/data/adsleuth'
+  elastic:
+    image: elasticsearch:latest
+    volumes:
+      - './elastic_volume:/usr/share/elasticsearch/data'
+    ports:
+      - "9200:9200"
