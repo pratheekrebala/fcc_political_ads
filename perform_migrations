@@ -1,0 +1,6 @@
+cd fcc_adtracker
+./manage.py syncdb
+./manage.py migrate fccpublicfiles
+./manage.py migrate scraper
+./manage.py migrate fecdata
+./manage.py migrate
