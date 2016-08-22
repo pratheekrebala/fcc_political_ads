@@ -11,21 +11,45 @@ est=pytz.timezone('US/Eastern')
 
 USER_AGENT = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4"
 
-rss_url = "https://stations.fcc.gov/rss/"
+rss_url = "https://publicfiles.fcc.gov/rss/"
 
 tempfile = "scraper/rss.xml"
 
-url_re = re.compile('Click\s*<a href="(.*?)">here</a>\s*to open the report')
+
+#Updated RSS entry sample from publicfiles.fcc.gov as of August 19, 2016
+'''<entry>
+    <title>TV Entity 65247 uploaded a file in Political Files/2016/State/John Gregg - Governor - IN</title>
+    <link href="https://publicfiles.fcc.gov/api/manager/download/fe179181-64d6-5212-2de0-06b86338fab5/af22f77c-e6c5-4fdb-80f8-ce268a03dfa0.pdf"/>
+    <id>af22f77c-e6c5-4fdb-80f8-ce268a03dfa0</id>
+    <updated>2016-08-19T23:59:59Z</updated>
+    <content type="xhtml" xml:lang="en" xml:base="http://stations.fcc.gov/">
+        <div
+            xmlns="http://www.w3.org/1999/xhtml">
+            <p>
+                <b>
+                    <a href="https://publicfiles.fcc.gov/tv-profile/wawv-tv">65247</a>
+                </b> uploaded 
+                <b>WAWV 1411332 - 10.25.16 - 10.31.16.pdf</b> in 
+                <b>Political Files/2016/State/John Gregg - Governor - IN</b> on 08/18/2016 11:00 pm. Click 
+                <a href="https://publicfiles.fcc.gov/api/manager/download/fe179181-64d6-5212-2de0-06b86338fab5/af22f77c-e6c5-4fdb-80f8-ce268a03dfa0.pdf">here</a> to open the file.
+            </p>
+        </div>
+    </content>
+</entry>'''
+
+
+url_re = re.compile('Click\s*<a href="(.*?)">here</a>\s*to open the file')
 political_re = re.compile('Political\s+File', re.I)
 datetime_re = re.compile('uploaded <b>(.*?)</b> in <b><a href="(.*?)">(.*?)</a></b> on ([\d\/]+) (\d+\:\d+) ([ap]m)')
-file_url_re = re.compile(r'collect/files/(\d+)/Political File/(.+)')
-file_domain = "https://stations.fcc.gov/"
+#Sample: https://publicfiles.fcc.gov/api/manager/download/fe179181-64d6-5212-2de0-06b86338fab5/af22f77c-e6c5-4fdb-80f8-ce268a03dfa0.pdf
+file_url_re = re.compile(r'api/manager/download/(.+)/(.+).pdf')
+file_domain = "https://publicfiles.fcc.gov/"
 
 ## oddly the opening parentheses isn't always there
-id_re = re.compile("id>[\d\-\w]+:(\d{14})")
+id_re = re.compile("<id>(.+?)</id>")
 fcc_infile_identifier = re.compile(r'\((\d{14})\)_.pdf')
-callsign_re = re.compile("https://stations.fcc.gov/station-profile/(.+?)/document-uploads/path")
-
+#sample: <a href="https://publicfiles.fcc.gov/tv-profile/wawv-tv">
+callsign_re = re.compile('<a href="https://publicfiles.fcc.gov/tv-profile/(.+?)">')
 
 def get_id(stringtext):
     this_id = None
