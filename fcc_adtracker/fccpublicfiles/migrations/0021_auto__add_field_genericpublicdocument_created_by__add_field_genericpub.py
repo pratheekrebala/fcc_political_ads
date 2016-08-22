@@ -49,7 +49,7 @@ class Migration(SchemaMigration):
                       keep_default=False)
 
         # Deleting field 'PoliticalBuy.is_visible'
-        db.delete_column('fccpublicfiles_politicalbuy', 'is_visible')
+        #db.delete_column('fccpublicfiles_politicalbuy', 'is_visible')
 
         # Adding field 'PoliticalBuy.is_summarized'
         db.add_column('fccpublicfiles_politicalbuy', 'is_summarized',
@@ -77,19 +77,19 @@ class Migration(SchemaMigration):
                       keep_default=False)
 
         # Deleting field 'Organization.is_visible'
-        db.delete_column('fccpublicfiles_organization', 'is_visible')
+        #db.delete_column('fccpublicfiles_organization', 'is_visible')
 
         # Deleting field 'PoliticalSpot.is_visible'
-        db.delete_column('fccpublicfiles_politicalspot', 'is_visible')
+        #db.delete_column('fccpublicfiles_politicalspot', 'is_visible')
 
         # Deleting field 'Role.is_visible'
-        db.delete_column('fccpublicfiles_role', 'is_visible')
+        #db.delete_column('fccpublicfiles_role', 'is_visible')
 
 
         # Changing field 'Role.title'
         db.alter_column('fccpublicfiles_role', 'title', self.gf('django.db.models.fields.CharField')(max_length=100, null=True))
         # Deleting field 'Person.is_visible'
-        db.delete_column('fccpublicfiles_person', 'is_visible')
+        #db.delete_column('fccpublicfiles_person', 'is_visible')
 
 
     def backwards(self, orm):
