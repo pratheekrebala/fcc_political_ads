@@ -6,7 +6,7 @@ services:
     expose:
       - 8000
     ports:
-      - "8000:8000"
+      - '8000:8000'
     links:
       - postgres
       - elastic
@@ -16,16 +16,17 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      - GEOJSONURL=localhost:8080
       - POSTGRES_DB=adsleuth
       - POSTGRES_USER=adsleuth
       - POSTGRES_PASSWORD=adsleuth
       - PGDATA=/var/lib/postresql/data/adsleuth
     volumes:
-      - './postgres_volume:/var/lib/postgresql/data/adsleuth'
+      - './persistent_volumes/postgres_volume:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
   elastic:
     image: elasticsearch:latest
     volumes:
-      - './elastic_volume:/usr/share/elasticsearch/data'
+      - './persistent_volumes/elasticsearch_volume:/usr/share/elasticsearch/data'
     ports:
-      - "9200:9200"
+      - '9200:9200'

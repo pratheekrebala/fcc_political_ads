@@ -10,10 +10,10 @@ COPY /requirements.txt /usr/src/app/requirements.txt
 WORKDIR /usr/src/app
 
 #Install required packages.
-RUN sudo pip install mercurial
-RUN sudo pip install -r requirements.txt
+RUN pip install mercurial
+RUN pip install -r requirements.txt
 
 #Copy files over
 COPY / /usr/src/app
 
-ENTRYPOINT ["/bin/bash"]
+CMD ["/bin/bash"]
