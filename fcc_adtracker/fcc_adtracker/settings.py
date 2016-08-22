@@ -144,8 +144,8 @@ INSTALLED_APPS = (
     'reversion',
     'mildmoderator',
 
-    'haystack',
-    'search',  # Implements the search functionality enabled by haystack
+    #'haystack',
+    #'search',  # Implements the search functionality enabled by haystack
 
     'doccloud',
     'registration',
